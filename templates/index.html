@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dataset Submitter</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; background-color: #f4f4f9; }
+        .container { max-width: 400px; padding: 25px; background: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .checkboxes { margin: 12px 0; }
+        .checkboxes label { display: block; margin: 8px 0; }
+        input[type="submit"] { background-color: #007BFF; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; width: 100%; }
+        input[type="submit"]:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Submit Dataset</h2>
+        <form action="/submit" method="POST">
+            <fieldset class="checkboxes">
+                <legend>Select Datasets:</legend>
+                <label><input type="checkbox" id="datasets" name="datasets" value="dataset1"> dataset1</label>
+                <label><input type="checkbox" id="datasets" name="datasets" value="dataset2"> dataset2</label>
+                <label><input type="checkbox" id="datasets" name="datasets" value="dataset3"> dataset3</label>
+            </fieldset>
+            <input type="submit" value="Run Curl & Submit">
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Curl Response</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; background-color: #f4f4f9; }
+        .container { max-width: 600px; padding: 25px; background: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        pre { background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 4px; overflow-x: auto; }
+        a { display: inline-block; margin-top: 15px; text-decoration: none; color: #007BFF; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Curl Command Responses</h2>
+        <p><strong>Submitted Datasets:</strong> {{ datasets | join(', ') }}</p>
+        {% for result in results %}
+            <h3>{{ result.dataset }}</h3>
+            <pre>{{ result.response }}</pre>
+        {% else %}
+            <p>No datasets were selected.</p>
+        {% endfor %}
+        <a href="/">← Back to Form</a>
+    </div>
+</body>
+</html>
