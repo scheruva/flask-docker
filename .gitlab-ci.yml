@@ -1,0 +1,28 @@
+stages:
+  - validate
+  - deploy
+
+variables:
+  DOCKER_HOST: "tcp://docker:2375"
+  DOCKER_TLS_CERTDIR: ""
+
+validate:
+  stage: validate
+  image: hashicorp/terraform:1.7.0
+  script:
+    - terraform init
+    - terraform validate
+
+deploy:
+  stage: deploy
+  image: 
+    name: hashicorp/terraform:1.7.0
+    entrypoint: [""]
+  services:
+    - name: docker:24.0.5-dind
+      alias: docker
+  script:
+    - terraform init
+    - terraform apply -auto-approve
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'

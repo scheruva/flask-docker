@@ -1,20 +1,21 @@
-FROM amazonlinux:2023
+FROM python:3.11-slim
 
-# Install the Python runtime and utilities used by the application
-RUN dnf -y install python3 python3-pip openssl && dnf clean all
+# Install Nginx, curl, and openssl
+RUN apt-get update && apt-get install -y nginx curl openssl && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 COPY requirements.txt .
-RUN python3 -m pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Generate a self-signed SSL certificate for HTTPS inside the container
-RUN openssl req -x509 -newkey rsa:4096 -nodes \
-    -out cert.pem -keyout key.pem -days 365 \
-    -subj "/C=US/ST=AL/L=Huntsville/O=WATT/CN=localhost"
+# Copy custom Nginx configuration
+COPY nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 5000
+# Set executable permission for entrypoint script
+RUN chmod +x entrypoint.sh
 
-CMD ["python3", "app.py"]
+EXPOSE 80 443
+
+ENTRYPOINT ["./entrypoint.sh"]
